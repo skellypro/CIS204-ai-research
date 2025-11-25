@@ -15,6 +15,11 @@
 - Define a simple struct to use in your program.
 - This struct should represent the “object” of your program
  Example: a Student struct might have members such as name, age, grade.
+ ```c
+ typedef struct {
+
+ };
+ ```
 ## 5. File Responsibilities - The following files are required in your project submission. Describe the purpose and contents of each file.
 - main.c
 - helpers.h
