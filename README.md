@@ -1,28 +1,83 @@
-# CIS204-ai-research
+# CIS204-ai-research 
+# PowerBase – a NoSQL solution to gym patron membership management
 ## 1. Program Purpose
-- What will a user use your program to do?
+- To teach the use of binary search trees by creating a specialized NoSQL database program for gym membership management.
 - What problem does your program solve for users?
+- The complexity of membership logistics in small businesses who don’t need big solutions, or the vulnerabilities that come with SQL databases.
 - What does your program do? Again, use your creativity here.
+- keep track of payment status and membership level of gym patrons
 ## 2. Input, Output, and Memory Management
-- What input will a user need to provide?
-- What output is the program expected to generate?
-- What variables will your program need to define?
-- How much memory will your program require to operate?
+- Input from the user:
+- Member ID
+- Member first name
+- Member last name
+- Update payment status
+- Save updated database
+- Delete users
+- Change the mode of the program
+		- Lookup mode
+		- New member mode
+		- Member edit mode
+		- Cancelation mode
+- Expected output:
+- Patron name
+- Member level
+- Payment status
+- Variables in main
+	- A pointer to the root of the database tree
+	- A pointer to the queried member
+	- A variable to handle a structure of type GymMember
+- Minimum memory requirements: At least 10 MiB
+- 8 MiB stack on X86_64 systems
+- At least 2 MiB for program text and variables
+- Additional space in ram and storage will be needed to hold the database tree and save it to a file
 ## 3. Functions Needed
-- List 3–6 functions your program will require.
- Example: int addNumbers(int a, int b);
+GymMember * search(const GymLeaf * root, unsigned searchId);
+Unsigned short changeStatus(GymMember * member, unsigned short newStatus);
+GymMember constructMember(const char * firstName, const char * lastName, unsigned short newStatus);
+GymLeaf * addLeaf(GymLeaf * root, const GymMember * newMember);
 ## 4. Data Structures
-- Define a simple struct to use in your program.
-- This struct should represent the “object” of your program
- Example: a Student struct might have members such as name, age, grade.
+Struct GymMember which contains the following members:
+- a string representing the member’s first name
+- a string representing the member's last name
+- an usigned integer representing the member ID number
+- a short unsigned integer representing the 4 levels: inactive, basic, gold, platinum
+- a Boolean value representing if their monthly fee has been paid
  ```c
- typedef struct {
-
- };
+ typedef struct _gym_member_data_ {
+char * firstName;
+	char * lastName;
+	unsigned memberId;
+	unsigned short memberLevel;
+	bool paid;
+ } GymMember;
  ```
-## 5. File Responsibilities - The following files are required in your project submission. Describe the purpose and contents of each file.
+
+Struct GymLeaf represents the leaves within the binary search tree used to contain the gym member data when the program is loaded. It contains:
+- a variable of type GymMember representing a row in the database
+- a pointer to a leaf with a higher gym member ID number
+- a pointer to a leaf with a lower gym member ID number
+```c
+typedef struct _tree_node_type_gym_member_ {
+	GymMember value;
+	GymLeaf *higher,
+		*lower;
+} GymLeaf;
+ ```
+
+## 5. File Responsibilities
 - main.c
+	- This file holds the start point of the program, and the main routine. This file also holds the pointer to the root of the database tree.
 - helpers.h
-- Helpers.c
-## 6. esearch Plan - Write a 250 words describing your strategy for using AI to help you to write the code for this project.
--Include 3–5 prompts you will give the AI to generate code.
+	- This file contains function headers for functions in helper.c
+- helpers.c
+	- This file contains functions for handling the binary tree of struct GymMember, along with functions to handle struct GymMember itself
+- data.csv
+	- This file will contain the data related to gym membership status
+## 6. Research Plan
+In order to figure out how this ai programming concept works, I will be giving it several prompts to prepare and edit the application. Here are some of the prompts I will use:
+- Write a program in C to handle gym patrons. The program should handle each patron’s first name, last name, member id, membership level, and whether they have paid their monthly fee. Use the member id as the primary key, and have the user input the id manually. The user will also be able to manually input new members, cancel memberships, edit existing memberships. The program will have 3 code files: main.c, helpers.h, and helpers.c. The program will also synchronize membership data to a csv file names data.csv. Use a binary search tree handling struct GymMember to contain the data within data.csv. The main function should have a pointer used to point to the root of the binary search tree.
+	- Find a way to prevent stack overflows when traversing through the tree in the program.
+	- Write member ID number assignment to be randomized but prevent duplicates. Is this more secure than an incremental approach?
+	- Are there any shortcuts we can take in the main program to speed things up? What is the biggest operation executed by this program, and how can we make it faster?
+I will intervene personally to fine tune any code generated by GitHub Copilot. It’s important to remember that output from the AI model is nothing more than statistical output, and will always require an intelligent hand to produce a working solution.
