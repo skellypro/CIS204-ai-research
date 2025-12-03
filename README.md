@@ -32,10 +32,10 @@
 - At least 2 MiB for program text and variables
 - Additional space in ram and storage will be needed to hold the database tree and save it to a file
 ## 3. Functions Needed
-GymMember * search(const GymLeaf * root, unsigned searchId);
-Unsigned short changeStatus(GymMember * member, unsigned short newStatus);
-GymMember constructMember(const char * firstName, const char * lastName, unsigned short newStatus);
-GymLeaf * addLeaf(GymLeaf * root, const GymMember * newMember);
+- GymMember * search(const GymLeaf * root, unsigned searchId);
+- Unsigned short changeStatus(GymMember * member, unsigned short newStatus);
+- GymMember constructMember(const char * firstName, const char * lastName, unsigned short newStatus);
+- GymLeaf * addLeaf(GymLeaf * root, const GymMember * newMember);
 ## 4. Data Structures
 Struct GymMember which contains the following members:
 - a string representing the member’s first name
